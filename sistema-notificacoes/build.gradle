@@ -1,0 +1,66 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.4'  // Versão atualizada do Spring Boot
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.seuprojeto'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// Spring Boot Starters
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// Spring Boot Actuator para monitoramento e endpoints de saúde
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// Micrometer Prometheus para coleta de métricas
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+
+
+	// Suporte ao WebSocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+	implementation 'org.springframework:spring-messaging'
+
+	implementation 'com.google.firebase:firebase-admin:9.1.1'
+
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok:1.18.28'
+	annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+	// JJWT (para uso de Keys e outras funcionalidades)
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'  // Suporte JSON com Jackson
+
+	// Springdoc OpenAPI para Documentação da API (Swagger)
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
+
+	// Driver PostgreSQL
+	runtimeOnly 'org.postgresql:postgresql'
+
+	// Ferramentas de Desenvolvimento
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// Dependências para Testes
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
