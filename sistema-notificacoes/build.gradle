@@ -29,7 +29,6 @@ dependencies {
 	// Micrometer Prometheus para coleta de métricas
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 
-
 	// Suporte ao WebSocket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 

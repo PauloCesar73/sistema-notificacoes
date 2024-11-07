@@ -1,6 +1,4 @@
-// infrastructure/security/JwtAuthenticationFilter.java
 package com.seuprojeto.sistema_notificacoes.auth;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +24,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        String requestURI = request.getRequestURI();
+        if (requestURI.startsWith("/swagger") || requestURI.startsWith("/v3/api-docs")
+                || requestURI.startsWith("/swagger-ui") || requestURI.equals("/auth/login")
+                || requestURI.equals("/auth/register") || requestURI.equals("/actuator/prometheus")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String authHeader = request.getHeader("Authorization");
         String jwtToken = null;
 
@@ -40,7 +46,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     userId, null, null);
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+        }  else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"error\": \"Não autorizado\"}");
+            response.getWriter().flush();
+            response.getWriter().close();
+        return;
+    }
 
         filterChain.doFilter(request, response);
     }
