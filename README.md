@@ -1,6 +1,8 @@
 # Rodar o projeto:
 docker-compose up --build
 
+swagger: http://localhost:8080/swagger-ui/index.html
+
 ## Acessando o Banco de Dados se precisar
 1. Abra o **DBeaver** e crie uma nova conexão para PostgreSQL.
 2. Configure os seguintes parâmetros:
