@@ -1,43 +1,23 @@
-Configurar banco application.properties:
+# Rodar o projeto:
+docker-compose up --build
 
-spring.datasource.url=
-spring.datasource.username=
-spring.datasource.password=
+## Acessando o Banco de Dados se precisar
+1. Abra o **DBeaver** e crie uma nova conexão para PostgreSQL.
+2. Configure os seguintes parâmetros:
+   - **Host**: localhost
+   - **Porta**: 5432
+   - **Database**: notificacoes_db
+   - **Username**: notificacoes_user
+   - **Password**: minhasenha
+3. Clique em **Testar Conexão** e depois em **Concluir**.
 
-Configurar Token Firebase application.properties:
+# Caso deseja analisar as métricas:
 
-firebase.config.json=
+## analise se o prometheus inicializou sem problemas: http://localhost:9090
+## configure o grafana no caminho: http://localhost:3000
+## no momento de importar o prometheus adicione o caminho: http://prometheus:9090
 
-Configurar banco Docker compose:
-SPRING_DATASOURCE_URL:
-SPRING_DATASOURCE_USERNAME:
-SPRING_DATASOURCE_PASSWORD:
-
-POSTGRES_DB:
-POSTGRES_USER:
-POSTGRES_PASSWORD:
-
-Configurar Token Firebase:
-
-firebase.config.json=
-
-Ajustar Docker Compose prometheus para rota de sua api
-targets: ['8080']
-
-Gerar container prometheus
-docker run -d --name=prometheus --network=monitoring -p 9090:9090 -v "seu caminho ex:\sistema-notificacoes\sistema-notificacoes\prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus"
-
-Gerar container grafana
-docker run -d --name=grafana --network=monitoring -p 3000:3000 grafana/grafana
-
-Gerar imagem projeto
-docker build -t notficationimage .
-
-Iniciar aplicação
-docker-compose up -d
-
-
-# Configuração do Banco de Dados no Docker
+# Configuração do Banco de Dados
 
 ```bash
 docker run --name notificacoes_container \
@@ -54,16 +34,6 @@ docker run --name notificacoes_container \
 - `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`: Define o usuário, senha e nome do banco.
 - `-p 5432:5432`: Mapeia a porta do container para a porta local, permitindo acesso ao PostgreSQL.
 - `-v notificacoes_data:/var/lib/postgresql/data`: Cria um volume para garantir a persistência dos dados.
-
-## Acessando o Banco de Dados
-1. Abra o **DBeaver** e crie uma nova conexão para PostgreSQL.
-2. Configure os seguintes parâmetros:
-   - **Host**: localhost
-   - **Porta**: 5432
-   - **Database**: notificacoes_db
-   - **Username**: notificacoes_user
-   - **Password**: minhasenha
-3. Clique em **Testar Conexão** e depois em **Concluir**.
 
 > **Nota de Persistência**: Os dados são salvos no volume `notificacoes_data`, mantendo-se disponíveis mesmo que o container seja parado ou removido.
 
